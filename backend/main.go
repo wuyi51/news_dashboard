@@ -15,5 +15,9 @@ func main() {
 		var weather = api.GetWeather()
 		return c.JSON(weather)
 	})
+	app.Get("/weibo", func(c fiber.Ctx) error {
+		var weibo = api.GetWeiboHot()
+		return c.JSON(weibo)
+	})
 	app.Listen(":3023")
 }

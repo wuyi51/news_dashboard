@@ -6,7 +6,12 @@ import (
 	"net/http"
 )
 
-func getWeiboHot() {
+type WeiboHot struct {
+	HotWords []string `json:"hot_words"`
+	HotCount []int    `json:"hot_count"`
+}
+
+func getWeiboHot() WeiboHot {
 	//https://weibo.com/ajax/side/hotSearch
 	url := "https://weibo.com/ajax/side/hotSearch"
 	client := http.Client{}
@@ -15,7 +20,6 @@ func getWeiboHot() {
 	resp, err := client.Get(url)
 	if err != nil {
 		fmt.Println("Error:", err)
-		return
 	}
 	defer resp.Body.Close()
 
@@ -30,6 +34,10 @@ func getWeiboHot() {
 		} else {
 			fmt.Println("Response Body:", string(bodyBytes))
 		}
+	}
+	return WeiboHot{
+		HotWords: []string{"热词1", "热词2", "热词3", "热词4", "热词5", "热词6", "热词7", "热词8", "热词9", "热词10"},
+		HotCount: []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
 	}
 }
 
