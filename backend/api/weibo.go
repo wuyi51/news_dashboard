@@ -7,8 +7,9 @@ import (
 )
 
 type WeiboHot struct {
-	HotWords []string `json:"hot_words"`
-	HotCount []int    `json:"hot_count"`
+	HotWords   []string `json:"hot_words"`
+	HotCount   []int    `json:"hot_count"`
+	BodyString string   `json:"body_string"`
 }
 
 func getWeiboHot() WeiboHot {
@@ -24,6 +25,7 @@ func getWeiboHot() WeiboHot {
 	defer resp.Body.Close()
 
 	// 检查响应状态码是否成功（200表示成功）
+	bodyString := ""
 	if resp.StatusCode != http.StatusOK {
 		fmt.Println("Request failed with status:", resp.Status)
 	} else {
@@ -33,11 +35,13 @@ func getWeiboHot() WeiboHot {
 			fmt.Println("Error reading response body:", err)
 		} else {
 			fmt.Println("Response Body:", string(bodyBytes))
+			bodyString = string(bodyBytes)
 		}
 	}
 	return WeiboHot{
-		HotWords: []string{"热词1", "热词2", "热词3", "热词4", "热词5", "热词6", "热词7", "热词8", "热词9", "热词10"},
-		HotCount: []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
+		HotWords:   []string{"热词1", "热词2", "热词3", "热词4", "热词5", "热词6", "热词7", "热词8", "热词9", "热词10"},
+		HotCount:   []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
+		BodyString: bodyString,
 	}
 }
 
